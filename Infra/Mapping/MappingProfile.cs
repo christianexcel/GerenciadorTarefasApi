@@ -14,6 +14,16 @@ public class MappingProfile : Profile
     {
         CreateMap<Tarefa, TarefaDto>()
             .ReverseMap();
+
+        CreateMap<DetalhesTarefa, DetalhesTarefaDto>()
+            .ReverseMap();
+
+        CreateMap<CriarDetalhesTarefaDto, DetalhesTarefa>()
+            .ReverseMap();
+
+        CreateMap<Tarefa, CriarTarefaDto>()
+            .ForMember(dest => dest.DetalhesTarefa, opt => opt.MapFrom(src => src.DetalhesTarefa != null ? src.DetalhesTarefa : null))
+            .ReverseMap();
     }
 
 }
