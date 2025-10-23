@@ -37,6 +37,8 @@ public class TarefaContext : DbContext
             entity.Property(u => u.Id).HasColumnName("id_usuario");
             entity.Property(u => u.Nome).HasColumnName("nome_usuario").HasMaxLength(100);
             entity.Property(u => u.Email).HasColumnName("email_usuario").HasMaxLength(150);
+            entity.HasIndex(e => e.Email)
+              .IsUnique();
         });
 
         /*modelBuilder.Entity<Usuario>()
