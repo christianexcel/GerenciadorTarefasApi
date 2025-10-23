@@ -37,7 +37,7 @@ public class TarefasController : ControllerBase
     }
     
     [HttpPost]
-    public ActionResult<TarefaDto> Add(CriarTarefaDto tarefaDto)  
+    public ActionResult<TarefaDto> Add([FromBody] CriarTarefaDto tarefaDto)  
     {
         try
         {
