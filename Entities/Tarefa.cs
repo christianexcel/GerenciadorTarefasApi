@@ -12,4 +12,5 @@ public class Tarefa
     public bool Concluida { get; set; }
     public int IdUsuario { get; set; }
     //public Usuario Usuario { get; set; }
+    public DetalhesTarefa DetalhesTarefa { get; set; }
 }

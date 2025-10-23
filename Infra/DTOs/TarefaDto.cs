@@ -11,4 +11,5 @@ public class TarefaDto
     public DateTime DataConclusao { get; set; }
     public bool Concluida { get; set; }
     public int IdUsuario { get; set; }
+    public DetalhesTarefaDto DetalhesTarefa { get; set; }
 }

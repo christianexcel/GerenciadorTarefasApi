@@ -2,6 +2,7 @@ using System;
 using GerenciadorTarefasApi.Entities;
 using GerenciadorTarefasApi.Infra.Context;
 using GerenciadorTarefasApi.Infra.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciadorTarefasApi.Infra.Repositories;
 
@@ -26,12 +27,14 @@ public class TarefaDBRepository : ITarefaRepository
     public Tarefa? ObterPorId(int id)
     {
         return _context.Tarefas
+            .Include(t => t.DetalhesTarefa)
             .FirstOrDefault(p => p.Id == id);
     }
 
     public List<Tarefa> ObterTodos()
     {
         return _context.Tarefas
+            .Include(t => t.DetalhesTarefa)
             .ToList();
     }
 

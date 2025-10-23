@@ -27,24 +27,25 @@ public class TarefaService : ITarefaService
         return _mapper.Map<List<TarefaDto>>(tarefas);
     }
 
-    public Tarefa? ObterPorId(int id)
+    public TarefaDto? ObterPorId(int id)
     {
-        return _tarefaRepository.ObterPorId(id);
+        return _mapper.Map<TarefaDto>(_tarefaRepository.ObterPorId(id));
     }
 
-    public Tarefa Adicionar(CriarTarefaDto tarefaDto)
+    public TarefaDto Adicionar(CriarTarefaDto tarefaDto)
     {
-        var novaTarefa = new Tarefa
+        var novaTarefa = new CriarTarefaDto
         {
             Titulo = tarefaDto.Titulo,
             Descricao = tarefaDto.Descricao,
             DataConclusao = tarefaDto.DataConclusao,
+            DetalhesTarefa = tarefaDto.DetalhesTarefa,
             Concluida = tarefaDto.Concluida,
             IdUsuario = tarefaDto.IdUsuario
         };
         var tarefaAdicionada = _tarefaRepository.Adicionar(_mapper.Map<Tarefa>(novaTarefa));
 
-        return _tarefaRepository.ObterPorId(tarefaAdicionada.Id) ?? tarefaAdicionada;
+        return _mapper.Map<TarefaDto>(tarefaAdicionada);
     }
 
 }

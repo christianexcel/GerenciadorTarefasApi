@@ -7,6 +7,6 @@ namespace GerenciadorTarefasApi.Services.Interfaces;
 public interface ITarefaService
 {
     List<TarefaDto> ObterTodos();
-    Tarefa? ObterPorId(int id);
-    Tarefa Adicionar(CriarTarefaDto clienteDto);
+    TarefaDto? ObterPorId(int id);
+    TarefaDto Adicionar(CriarTarefaDto clienteDto);
 }
