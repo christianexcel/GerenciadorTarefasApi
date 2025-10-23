@@ -4,8 +4,8 @@ namespace GerenciadorTarefasApi.Entities;
 
 public class DetalhesTarefa
 {
-    int Id { get; set; }
-    int Prioridade { get; set; }
-    String NotasAdicionais { get; set; }
-    int IdTarefa { get; set; }
+    public int Prioridade { get; set; }
+    public String NotasAdicionais { get; set; }
+    public int IdTarefa { get; set; }
+    public Tarefa Tarefa { get; set; }
 }

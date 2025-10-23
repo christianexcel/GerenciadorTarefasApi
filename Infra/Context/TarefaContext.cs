@@ -15,6 +15,19 @@ public class TarefaContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.ToTable("TB_USUARIOS");
+
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Id).HasColumnName("id_usuario");
+            entity.Property(u => u.Nome).HasColumnName("nome_usuario").HasMaxLength(100);
+            entity.Property(u => u.Email).HasColumnName("email_usuario").HasMaxLength(150);
+            entity.HasIndex(e => e.Email)
+                .IsUnique();
+        });
+
         modelBuilder.Entity<Tarefa>(entity =>
         {
             entity.ToTable("TB_TAREFAS");
@@ -29,19 +42,19 @@ public class TarefaContext : DbContext
             entity.Property(t => t.IdUsuario).HasColumnName("id_usuario");
         });
 
-        modelBuilder.Entity<Usuario>(entity =>
+        modelBuilder.Entity<DetalhesTarefa>(entity =>
         {
-            entity.ToTable("TB_USUARIOS");
+            entity.ToTable("TB_DETALHES_TAREFA");
 
-            entity.HasKey(u => u.Id);
-            entity.Property(u => u.Id).HasColumnName("id_usuario");
-            entity.Property(u => u.Nome).HasColumnName("nome_usuario").HasMaxLength(100);
-            entity.Property(u => u.Email).HasColumnName("email_usuario").HasMaxLength(150);
+            entity.HasKey(t => t.IdTarefa);
+            entity.Property(t => t.IdTarefa).HasColumnName("id_tarefa");
+            entity.Property(t => t.Prioridade).HasColumnName("prioridade").HasMaxLength(100);
+            entity.Property(t => t.NotasAdicionais).HasColumnName("notas_adicionais");
         });
 
-        /*modelBuilder.Entity<Usuario>()
-            .HasOne(u => u.Tarefa)
-            .WithOne(t => t.)
-            .HasForeignKey<Endereco>(e => e.Id);*/
+        modelBuilder.Entity<Tarefa>()
+            .HasOne(t => t.DetalhesTarefa)
+            .WithOne(d => d.Tarefa)
+            .HasForeignKey<DetalhesTarefa>(d => d.IdTarefa);
     }
 }

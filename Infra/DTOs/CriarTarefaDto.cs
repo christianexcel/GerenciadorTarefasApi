@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using GerenciadorTarefasApi.Entities;
 
 namespace GerenciadorTarefasApi.Infra.DTOs;
 
@@ -12,6 +13,8 @@ public class CriarTarefaDto
     [MaxLength(100, ErrorMessage = "O descrição da tarefa não pode exceder 500 caracteres.")]
     public string Descricao { get; set; } = string.Empty;
     public DateTime DataConclusao { get; set; }
+    [Required(ErrorMessage = "Detalhes da tarefa é obrigatório.")]
+    public CriarDetalhesTarefaDto DetalhesTarefa { get; set; }
     public bool Concluida { get; set; } = false;
     [Required]
     public int IdUsuario { get; set; }
