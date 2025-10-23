@@ -29,6 +29,16 @@ public class TarefaContext : DbContext
             entity.Property(t => t.IdUsuario).HasColumnName("id_usuario");
         });
 
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.ToTable("TB_USUARIOS");
+
+            entity.HasKey(u => u.Id);
+            entity.Property(u => u.Id).HasColumnName("id_usuario");
+            entity.Property(u => u.Nome).HasColumnName("nome_usuario").HasMaxLength(100);
+            entity.Property(u => u.Email).HasColumnName("email_usuario").HasMaxLength(150);
+        });
+
         /*modelBuilder.Entity<Usuario>()
             .HasOne(u => u.Tarefa)
             .WithOne(t => t.)

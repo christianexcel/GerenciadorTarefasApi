@@ -18,6 +18,7 @@ public class TarefaDBRepository : ITarefaRepository
     public Tarefa? Adicionar(Tarefa novaTarefa)
     {
         novaTarefa.DataCriacao = DateTime.UtcNow;
+        _context.Tarefas.Add(novaTarefa);
         _context.SaveChanges();
         return novaTarefa;
     }

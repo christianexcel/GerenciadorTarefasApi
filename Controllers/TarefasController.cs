@@ -36,7 +36,7 @@ public class TarefasController : ControllerBase
         return Ok(tarefaDto);
     }
     
-    [HttpPost]  
+    [HttpPost]
     public ActionResult<TarefaDto> Add(CriarTarefaDto tarefaDto)  
     {
         try
