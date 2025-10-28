@@ -19,6 +19,9 @@ builder.Services.AddDbContext<TarefaContext>(options =>
 builder.Services.AddScoped<ITarefaService, TarefaService>();
 builder.Services.AddScoped<ITarefaRepository, TarefaDBRepository>();
 
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioDBRepository>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
