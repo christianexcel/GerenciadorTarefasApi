@@ -48,4 +48,28 @@ public class TarefaService : ITarefaService
         return _mapper.Map<TarefaDto>(tarefaAdicionada);
     }
 
+    public TarefaDto? Atualizar(int id, CriarTarefaDto tarefaAtualizada)
+    {
+        var tarefa = _tarefaRepository.ObterPorId(id);
+        if (tarefa != null)
+        {
+            tarefa.Concluida = tarefaAtualizada.Concluida;
+            tarefa.DataConclusao = tarefaAtualizada.DataConclusao;
+            tarefa.Descricao = tarefaAtualizada.Descricao;
+            tarefa.IdUsuario = tarefaAtualizada.IdUsuario;
+            tarefa.DetalhesTarefa.NotasAdicionais = tarefaAtualizada.DetalhesTarefa.NotasAdicionais;
+            tarefa.DetalhesTarefa.Prioridade = tarefaAtualizada.DetalhesTarefa.Prioridade;
+            var _tarefaAtualizada = _tarefaRepository.Atualizar(id, tarefa);
+
+            return _mapper.Map<TarefaDto>(_tarefaAtualizada);
+        }
+
+        return null;
+    }
+
+    public bool Remover(int id)
+    {
+        return _tarefaRepository.Remover(id);
+    }
+
 }
