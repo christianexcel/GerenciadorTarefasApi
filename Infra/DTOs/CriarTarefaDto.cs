@@ -18,5 +18,6 @@ public class CriarTarefaDto
     public bool Concluida { get; set; } = false;
     [Required]
     public int IdUsuario { get; set; }
+    ICollection<CriarTarefaTagDto> TarefaTags { get; set; } = new List<CriarTarefaTagDto>();
 
 }

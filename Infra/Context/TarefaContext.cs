@@ -12,6 +12,9 @@ public class TarefaContext : DbContext
     }
 
     public DbSet<Tarefa> Tarefas { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<TarefaTag> TarefasTags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,9 +55,52 @@ public class TarefaContext : DbContext
             entity.Property(t => t.NotasAdicionais).HasColumnName("notas_adicionais");
         });
 
+        modelBuilder.Entity<Tag>(entity =>
+        {
+            entity.ToTable("TB_TAGS");
+            entity.HasKey(t => t.Id);
+            entity.Property(t => t.Id).HasColumnName("id_tag");
+            entity.Property(t => t.Nome).HasColumnName("nome_tag");
+        });
+
+        modelBuilder.Entity<TarefaTag>(entity =>
+        {
+            entity.ToTable("TB_TAREFAS_TAGS");
+            entity.HasKey(tt => new { tt.IdTarefa, tt.IdTag });
+            entity.Property(tt => tt.IdTarefa).HasColumnName("id_tarefa");
+            entity.Property(tt => tt.IdTag).HasColumnName("id_tag");
+            entity.HasOne(tt => tt.Tarefa)
+                .WithMany(t => t.TarefaTags)
+                .HasForeignKey(tt => tt.IdTarefa)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_tarefatag_tarefa");
+
+            entity.HasOne(tt => tt.Tag)
+                .WithMany(t => t.TarefaTags)
+                .HasForeignKey(tt => tt.IdTag)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_tarefatag_tag");
+        });
+
+        #region Relacionamentos
         modelBuilder.Entity<Tarefa>()
             .HasOne(t => t.DetalhesTarefa)
             .WithOne(d => d.Tarefa)
-            .HasForeignKey<DetalhesTarefa>(d => d.IdTarefa);
+            .HasForeignKey<DetalhesTarefa>(d => d.IdTarefa)
+            .OnDelete(DeleteBehavior.Cascade)
+            .HasConstraintName("fk_tarefa_detalhes");
+
+        modelBuilder.Entity<Usuario>()
+            .HasMany(u => u.Tarefas)
+            .WithOne(t => t.Usuario)
+            .HasForeignKey(t => t.IdUsuario)
+            .HasConstraintName("fk_usuario_tarefa");
+
+        modelBuilder.Entity<Tarefa>()
+            .HasOne(t => t.Usuario)
+            .WithMany(u => u.Tarefas)
+            .HasForeignKey(t => t.IdUsuario)
+            .HasConstraintName("fk_usuario_tarefa");
+        #endregion
     }
 }

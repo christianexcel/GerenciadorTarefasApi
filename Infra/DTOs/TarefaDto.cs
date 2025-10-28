@@ -1,4 +1,5 @@
 using System;
+using GerenciadorTarefasApi.Entities;
 
 namespace GerenciadorTarefasApi.Infra.DTOs;
 
@@ -11,5 +12,6 @@ public class TarefaDto
     public DateTime DataConclusao { get; set; }
     public bool Concluida { get; set; }
     public int IdUsuario { get; set; }
+    public ICollection<TarefaTagDto> TarefaTags { get; set; } = new List<TarefaTagDto>();
     public DetalhesTarefaDto DetalhesTarefa { get; set; }
 }
