@@ -10,5 +10,6 @@ public interface ITarefaService
     TarefaDto? ObterPorId(int id);
     TarefaDto Adicionar(CriarTarefaDto tarefa);
     TarefaDto? Atualizar(int id, CriarTarefaDto tarafaAtualizada);
+    bool concluirTarefa(int id);
     bool Remover(int id);
 }

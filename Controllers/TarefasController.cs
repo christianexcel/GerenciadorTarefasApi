@@ -72,6 +72,33 @@ public class TarefasController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+
+    [HttpPatch("{id}/concluir")]
+    public ActionResult Patch(int id)
+    {
+        try
+        {
+            var tarefa = _tarefaService.ObterPorId(id);
+
+            if (tarefa == null)
+            {
+                return NotFound();
+            }
+
+            if (tarefa.Concluida)
+            {
+                return BadRequest("Tarefa já foi marcada como concluída.");
+            }
+
+            _tarefaService.concluirTarefa(id);
+
+            return Ok(tarefa);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
     
     [HttpDelete("{id}")]
     public ActionResult Delete(int id) 
