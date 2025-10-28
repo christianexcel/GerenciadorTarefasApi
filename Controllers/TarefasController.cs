@@ -12,10 +12,12 @@ public class TarefasController : ControllerBase
 {
 
     private readonly ITarefaService _tarefaService;
+    private readonly ITagService _tagService;
 
-    public TarefasController(ITarefaService tarefaService)
+    public TarefasController(ITarefaService tarefaService, ITagService tagService)
     {
         _tarefaService = tarefaService;
+        _tagService = tagService;
     }
 
     [HttpGet]
@@ -66,6 +68,40 @@ public class TarefasController : ControllerBase
             var dtoRetorno = _tarefaService.ObterPorId(tarefaCriada.Id);
 
             return CreatedAtAction(nameof(GetById), new { id = tarefaCriada.Id }, dtoRetorno);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("{tarefaId}/tags/{tagId}")]
+    public ActionResult<TarefaDto> VincularTag(int tarefaId, int tagId)
+    {
+        try
+        {
+            var tarefa = _tarefaService.ObterPorId(tarefaId);
+
+            if (tarefa == null)
+            {
+                return NotFound("Tarefa não encontrada.");
+            }
+
+            var tag = _tagService.ObterPorId(tagId);
+            if (tag == null)
+            {
+                return NotFound("Tag não encontrada.");
+            }
+
+            var vincular = _tarefaService.VincularTag(tarefaId, tagId);
+            if (!vincular)
+            {
+                return BadRequest("Erro ao vincular tag.");
+            }
+
+            var dtoRetorno = _tarefaService.ObterPorId(tarefa.Id);
+
+            return CreatedAtAction(nameof(GetById), new { id = tarefa.Id }, dtoRetorno);
         }
         catch (Exception ex)
         {

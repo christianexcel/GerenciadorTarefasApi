@@ -9,7 +9,8 @@ public interface ITarefaService
     List<TarefaDto> ObterTodos();
     TarefaDto? ObterPorId(int id);
     TarefaDto Adicionar(CriarTarefaDto tarefa);
-    TarefaDto? Atualizar(int id, CriarTarefaDto tarafaAtualizada);
+    TarefaDto? Atualizar(int id, CriarTarefaDto tarefaAtualizada);
+    bool VincularTag(int tarefaId, int tagId);
     bool concluirTarefa(int id);
     bool Remover(int id);
 }

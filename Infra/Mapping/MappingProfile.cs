@@ -31,6 +31,17 @@ public class MappingProfile : Profile
         CreateMap<Usuario, CriarUsuarioDto>()
             .ReverseMap();
 
+        CreateMap<Tag, TagDto>()
+            .ReverseMap();
+
+        CreateMap<Tag, CriarTagDto>()
+            .ReverseMap();
+
+        CreateMap<TarefaTag, TarefaTagDto>()
+            .ReverseMap();
+
+        
+
     }
 
 }

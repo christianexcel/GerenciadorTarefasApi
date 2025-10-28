@@ -25,12 +25,16 @@ public class UsuarioDBRepository : IUsuarioRepository
     public List<Usuario> ObterTodos()
     {
         return _context.Usuarios
+            .Include(u => u.Tarefas)
+                .ThenInclude(t => t.DetalhesTarefa)
             .ToList();
     }
 
     public Usuario? ObterPorId(int id)
     {
         return _context.Usuarios
+            .Include(u => u.Tarefas)
+                .ThenInclude(t => t.DetalhesTarefa)
             .FirstOrDefault(p => p.Id == id);
     }
 

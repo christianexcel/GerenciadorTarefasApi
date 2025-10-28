@@ -28,6 +28,8 @@ public class TarefaDBRepository : ITarefaRepository
     {
         return _context.Tarefas
             .Include(t => t.DetalhesTarefa)
+            .Include(t => t.TarefaTags)
+                .ThenInclude(tt => tt.Tag)
             .ToList();
     }
 
@@ -35,6 +37,8 @@ public class TarefaDBRepository : ITarefaRepository
     {
         return _context.Tarefas
             .Include(t => t.DetalhesTarefa)
+            .Include(t => t.TarefaTags)
+                .ThenInclude(tt => tt.Tag)
             .FirstOrDefault(p => p.Id == id);
     }
 

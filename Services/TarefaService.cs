@@ -10,11 +10,13 @@ namespace GerenciadorTarefasApi.Services;
 public class TarefaService : ITarefaService
 {
     private readonly ITarefaRepository _tarefaRepository;
+    private readonly ITagRepository _tagRepository;
     private readonly IMapper _mapper;
 
-    public TarefaService(ITarefaRepository tarefaRepository, IMapper mapper)
+    public TarefaService(ITarefaRepository tarefaRepository, ITagRepository tagRepository, IMapper mapper)
     {
         _tarefaRepository = tarefaRepository;
+        _tagRepository = tagRepository;
         _mapper = mapper;
     }
 
@@ -74,6 +76,23 @@ public class TarefaService : ITarefaService
         {
             tarefa.Concluida = true;
             _tarefaRepository.Atualizar(id, tarefa);
+            return true;
+        }
+        return false;
+    }
+    
+    public bool VincularTag(int tarefaId, int tagId)
+    {
+        var tarefa = _tarefaRepository.ObterPorId(tarefaId);
+        var tag = _tagRepository.ObterPorId(tagId);
+        if (tarefa != null)
+        {
+            tarefa.TarefaTags.Add(new TarefaTag
+            {
+                IdTarefa = tarefa.Id,
+                IdTag = tag.Id
+            });
+            Atualizar(tarefaId, _mapper.Map<CriarTarefaDto>(tarefa));
             return true; 
         }
         return false;
