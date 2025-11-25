@@ -31,6 +31,22 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options
+        .AddPolicy(
+            name: MyAllowSpecificOrigins,
+            policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:3000", "http://127.0.0.1:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            }
+        );
+});
 
 var app = builder.Build();
 
@@ -44,6 +60,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllers();
 

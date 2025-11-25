@@ -57,6 +57,7 @@ public class TarefaService : ITarefaService
         {
             tarefa.Concluida = tarefaAtualizada.Concluida;
             tarefa.DataConclusao = tarefaAtualizada.DataConclusao;
+            tarefa.Titulo = tarefaAtualizada.Titulo;
             tarefa.Descricao = tarefaAtualizada.Descricao;
             tarefa.IdUsuario = tarefaAtualizada.IdUsuario;
             tarefa.DetalhesTarefa.NotasAdicionais = tarefaAtualizada.DetalhesTarefa.NotasAdicionais;
