@@ -24,18 +24,39 @@ public class TarefaDBRepository : ITarefaRepository
         return novaTarefa;
     }
 
-    public Tarefa? ObterPorId(int id)
-    {
-        return _context.Tarefas
-            .Include(t => t.DetalhesTarefa)
-            .FirstOrDefault(p => p.Id == id);
-    }
-
     public List<Tarefa> ObterTodos()
     {
         return _context.Tarefas
             .Include(t => t.DetalhesTarefa)
+            .Include(t => t.TarefaTags)
+                .ThenInclude(tt => tt.Tag)
             .ToList();
+    }
+
+    public Tarefa? ObterPorId(int id)
+    {
+        return _context.Tarefas
+            .Include(t => t.DetalhesTarefa)
+            .Include(t => t.TarefaTags)
+                .ThenInclude(tt => tt.Tag)
+            .FirstOrDefault(p => p.Id == id);
+    }
+
+    public Tarefa? Atualizar(int id, Tarefa tarefaAtualizada)
+    {
+        _context.Tarefas.Update(tarefaAtualizada);
+        _context.SaveChanges();
+        return tarefaAtualizada;
+    }
+
+    public bool Remover(int id)
+    {
+        var tarefaParaDeletar = ObterPorId(id);
+        if (tarefaParaDeletar == null) return false;
+
+        _context.Tarefas.Remove(tarefaParaDeletar);
+        _context.SaveChanges();
+        return true;
     }
 
 }

@@ -24,6 +24,24 @@ public class MappingProfile : Profile
         CreateMap<Tarefa, CriarTarefaDto>()
             .ForMember(dest => dest.DetalhesTarefa, opt => opt.MapFrom(src => src.DetalhesTarefa != null ? src.DetalhesTarefa : null))
             .ReverseMap();
+
+        CreateMap<Usuario, UsuarioDto>()
+            .ReverseMap();
+
+        CreateMap<Usuario, CriarUsuarioDto>()
+            .ReverseMap();
+
+        CreateMap<Tag, TagDto>()
+            .ReverseMap();
+
+        CreateMap<Tag, CriarTagDto>()
+            .ReverseMap();
+
+        CreateMap<TarefaTag, TarefaTagDto>()
+            .ReverseMap();
+
+        
+
     }
 
 }

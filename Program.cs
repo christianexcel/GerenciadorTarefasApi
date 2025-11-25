@@ -19,12 +19,34 @@ builder.Services.AddDbContext<TarefaContext>(options =>
 builder.Services.AddScoped<ITarefaService, TarefaService>();
 builder.Services.AddScoped<ITarefaRepository, TarefaDBRepository>();
 
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioDBRepository>();
+
+builder.Services.AddScoped<ITagService, TagService>();
+builder.Services.AddScoped<ITagRepository, TagDBRepository>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options
+        .AddPolicy(
+            name: MyAllowSpecificOrigins,
+            policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:3000", "http://127.0.0.1:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            }
+        );
+});
 
 var app = builder.Build();
 
@@ -38,6 +60,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapControllers();
 

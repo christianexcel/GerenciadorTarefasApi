@@ -1,4 +1,3 @@
-SQL
 -- Tabela de Usuários (Exemplo de entidade principal)
 CREATE TABLE "TB_USUARIOS" (
 "id_usuario" SERIAL PRIMARY KEY,
